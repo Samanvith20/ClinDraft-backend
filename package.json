@@ -5,7 +5,7 @@
   "type": "module",
   "main": "src/server.ts",
   "scripts": {
-    "start": "npm run db:push && tsx src/server.ts",
+    "start": "tsx src/server.ts",
     "dev": "tsx watch src/server.ts",
     "db:push": "drizzle-kit push --force",
     "db:generate": "drizzle-kit generate",
