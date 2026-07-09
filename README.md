@@ -278,6 +278,25 @@ To deliver a highly functional MVP quickly, the following trade-offs were made:
 3. **No Concurrent Edit Conflict Resolution:**
    * *Trade-off:* The `PUT /api/patients/:id/context` route currently blindly overwrites the database. If two doctors edit the same patient at the exact same time, the last one to click save will silently overwrite the other's changes. Implementing ETags or optimistic locking was skipped for speed.
 
+## 🚀 Improvements for a Real Clinical Pilot
+
+If this application were to transition from a prototype to a real-world clinical pilot, the following improvements would be strictly necessary:
+
+1. **Database Migration:** Swap SQLite for **PostgreSQL**. PostgreSQL offers vastly superior scalability, true horizontal concurrency, and robust JSONB indexing capabilities needed for complex clinical analytics.
+2. **Authentication & Authorization:** Implement strict OAuth/OIDC authentication and Role-Based Access Control (RBAC) to ensure only verified medical professionals can access PHI (Protected Health Information).
+3. **Comprehensive Audit Logging:** Implement a HIPAA-compliant audit trail that records every single `read` and `write` access to a patient's record, tagged with the exact user ID and timestamp.
+4. **Optimistic Locking for Concurrent Edits:** Implement ETags or version numbers on the `context` object to prevent two providers from accidentally overwriting each other's changes if they edit a chart simultaneously.
+5. **Automated Testing:** Implement a full suite of unit and integration tests (e.g., using Jest/Supertest) integrated into a CI/CD pipeline to guarantee no regressions in API behavior.
+
+---
+
+## 🛑 What We Would Refuse to Ship (Even if Asked)
+
+In healthcare software, establishing hard ethical and safety boundaries is just as important as writing good code. We would categorically refuse to ship the following:
+
+1. **Autonomous Diagnostic AI:** We will not ship any feature that allows the AI to autonomously generate medical diagnoses, dictate treatment plans, or prescribe medications. The AI must strictly remain a "Human-in-the-Loop" documentation and summarization assistant.
+2. **Unencrypted PHI Transmission:** We will refuse to deploy the application on any architecture that allows Protected Health Information to be transmitted over unencrypted HTTP, or stored at rest without enterprise-grade encryption.
+3. **Shared / Generic Accounts:** We will refuse to implement "clinic-wide" generic logins. In clinical software, every action must be tied to a distinct, auditable human identity for liability and safety tracking.
 ---
 
 ## 🐛 Troubleshooting

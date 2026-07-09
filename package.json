@@ -5,9 +5,9 @@
   "type": "module",
   "main": "src/server.ts",
   "scripts": {
-    "start": "tsx src/server.ts",
+    "start": "npm run db:push && tsx src/server.ts",
     "dev": "tsx watch src/server.ts",
-    "db:push": "drizzle-kit push",
+    "db:push": "drizzle-kit push --force",
     "db:generate": "drizzle-kit generate",
     "db:seed": "tsx src/db/seed.ts",
     "build": "tsc"
@@ -24,7 +24,8 @@
     "uuid": "^10.0.0",
     "zod": "^3.23.8",
     "tsx": "^4.16.2",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "drizzle-kit": "^0.31.10"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.11",
